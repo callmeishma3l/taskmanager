@@ -1,0 +1,13 @@
+App de task management.
+Taskurile din sistem sa fie listate toate intr-un loc
+Campuri in task : 
+- numele -> user editable 
+- descriere -> user editable
+- deadline -> user editable
+- data adaugarii -> automat
+- data ultimei modificari -> automat
+Sa se poata adauga, sterge, edita - view-uri
+
+add application account
+Useri adaugati la task-uri din CRUD
+fiecare user vede doar taskurile lui

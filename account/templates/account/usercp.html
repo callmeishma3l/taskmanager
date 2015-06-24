@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>USER CP</title>
+</head>
+<body>
+{% if user.is_authenticated %}
+    <p>Welcome, {{ user.username }}.</p>
+    <p><a href="{% url 'account:password-change' %}">Change password.</a></p>
+    <p><a href="{% url 'account:logout' %}">Logout.</a></p>
+{% else %}
+    <p>Welcome, new user. Please <a href="{% url 'account:login' %}">log in.</a></p>
+{% endif %}
+</body>
+</html>

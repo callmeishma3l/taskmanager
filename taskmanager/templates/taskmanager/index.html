@@ -1,0 +1,89 @@
+{% extends "taskmanager/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Task index{% endblock %}
+
+{% block content %}
+    <table class="table">
+        {% if task_list %}
+        <thead>
+            <td colspan="2">
+                Short Description
+            </td>
+            <td>
+                Long Description
+            </td>
+            <td>
+                Deadline
+            </td>
+            <td>
+                Created date
+            </td>
+            <td>
+
+            </td>
+            <td>
+
+            </td>
+        </thead>
+        {% for task in task_list %}
+            <tr>
+                <td colspan="2">
+                    <a href="#" class="task-short-description" data-name="short_description" data-pk="{{ task.id }}" data-url="{% url 'taskmanager:editinplace' task.id %}">
+                        {{ task.short_description }}
+                    </a>
+                </td>
+                <td>
+                    <a href="#" class="task-long-description" data-name="long_description" data-pk="{{ task.id }}" data-url="{% url 'taskmanager:editinplace' task.id %}">
+                        {{ task.long_description }}
+                    </a>
+                </td>
+                <td>
+                    <a href="#" class="task-deadline" data-name="deadline" data-pk="{{ task.id }}" data-url="{% url 'taskmanager:editinplace' task.id %}">
+                        {{ task.deadline }}
+                    </a>
+                </td>
+                <td>
+                    {{ task.date_added}}
+                </td>
+                <td>
+                    <a href='{% url "taskmanager:edit" task.pk %}'><button type="button" class="btn btn-warning">Edit Task</button></a>
+                </td>
+                <td>
+                    <a href='{% url "taskmanager:delete" task.pk %}'><button type="button" class="btn btn-danger">Delete Task</button></a>
+                </td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="7">
+                <a href="{% url 'taskmanager:new' %}"><button type="button" class="btn btn-success">Create new Task</button></a>
+            </td>
+        </tr>
+        {% else %}
+            <p>What is tasks?</p>
+        {% endif %}
+    </table>
+{% endblock %}
+
+{% block js %}
+
+<script>
+$.fn.editable.defaults.mode = 'inline';
+$.fn.editable.defaults.params = {csrfmiddlewaretoken: '{{ csrf_token }}',}
+
+$(document).ready(function(){
+    $('.task-short-description').editable({
+        type: 'text',
+        title: 'Task short description',
+    });
+    $('.task-long-description').editable({
+        type: 'textarea',
+        title: 'Task long description',
+    });
+    $('.task-deadline').editable({
+        type: 'date',
+        title: 'Task deadline',
+    });
+});
+</script>
+{% endblock %}

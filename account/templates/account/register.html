@@ -1,0 +1,26 @@
+{% extends "taskmanager/base.html" %}
+{% load staticfiles %}
+{% load css_to_forms %}
+
+{% block title %}
+REGISTER
+{% endblock %}
+
+{% block content %}
+
+<div class="panel panel-default">
+    <div class="panel-heading">REGISTER</div>
+    <div class="panel-body">
+        <form action="{% url 'account:register' %}" method="post" style="text-align:left;">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }} {{ field|addcss:"form-control" }}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-success">Register</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
