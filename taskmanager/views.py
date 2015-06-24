@@ -5,12 +5,14 @@ from django.views import generic
 from .models import Task
 from .forms import TaskForm
 
-from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadRequest, request
 from django.core.urlresolvers import reverse
 
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 
+from django.http import request
+from django.core import exceptions
 
 # this is the official way to do it from the docs, but still :)
 # class LoginRequiredMixin(object):
@@ -35,6 +37,18 @@ class AdminRequiredMixin(object):
 class IndexView(LoginRequiredMixin,generic.ListView):
     def get_queryset(self):
         return Task.objects.all()
+    # if request.user.is_staff:
+    #     def get_queryset(self):
+    #         try:
+    #             return Task.objects.get(assigned_user=request.user)
+    #         except exceptions.ObjectDoesNotExist:
+    #             return None
+    # else:
+    #     def get_queryset(self):
+    #         try:
+    #             return Task.objects.get(assigned_user=request.user)
+    #         except exceptions.ObjectDoesNotExist:
+    #             return None
     context_object_name = 'task_list'
     template_name = 'taskmanager/index.html'
 
