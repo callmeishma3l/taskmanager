@@ -36,19 +36,13 @@ class AdminRequiredMixin(object):
 
 class IndexView(LoginRequiredMixin,generic.ListView):
     def get_queryset(self):
-        return Task.objects.all()
-    # if request.user.is_staff:
-    #     def get_queryset(self):
-    #         try:
-    #             return Task.objects.get(assigned_user=request.user)
-    #         except exceptions.ObjectDoesNotExist:
-    #             return None
-    # else:
-    #     def get_queryset(self):
-    #         try:
-    #             return Task.objects.get(assigned_user=request.user)
-    #         except exceptions.ObjectDoesNotExist:
-    #             return None
+        if self.request.user.is_admin:
+            return Task.objects.all()
+        else:
+            try:
+                return Task.objects.get(assigned_user=self.request.user)
+            except exceptions.ObjectDoesNotExist:
+                return None
     context_object_name = 'task_list'
     template_name = 'taskmanager/index.html'
 
